@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Campo de avaliacao por estrelas (CSS puro, sem JavaScript). */
+.rating-stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating-stars input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.rating-stars label {
+    cursor: pointer;
+    color: #3f3f46; /* zinc-700 */
+    transition: color 0.15s ease;
+}
+
+.rating-stars label svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+    color: #fcd34d; /* amber-300 */
+}
+
+.rating-stars input:checked ~ label {
+    color: #fbbf24; /* amber-400 */
+}
+
+.rating-stars input:focus-visible ~ label {
+    outline: 2px solid #fbbf24;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
