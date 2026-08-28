@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,5 +72,13 @@ class User extends Authenticatable
     public function avaliacoes(): HasMany
     {
         return $this->hasMany(Avaliacao::class, 'usuario_id');
+    }
+
+    /**
+     * Filmes favoritados pelo usuario (belongsToMany).
+     */
+    public function favoritos(): BelongsToMany
+    {
+        return $this->belongsToMany(Filme::class, 'favoritos', 'user_id', 'filme_id')->withTimestamps();
     }
 }

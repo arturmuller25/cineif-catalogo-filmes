@@ -4,7 +4,7 @@
 
 @section('conteudo')
     <div class="mx-auto max-w-3xl">
-        <a href="{{ route('admin.filmes.index') }}" class="mb-4 inline-block text-sm text-zinc-400 hover:text-amber-400">Voltar</a>
+        <a href="{{ route('admin.filmes.index') }}" class="mb-4 inline-block text-sm text-zinc-400 hover:text-brand-400">Voltar</a>
         <h1 class="mb-6 text-2xl font-extrabold tracking-tight">Cadastrar filme</h1>
 
         <form method="POST" action="{{ route('admin.filmes.store') }}" enctype="multipart/form-data"
@@ -18,7 +18,7 @@
                     Cancelar
                 </a>
                 <button type="submit"
-                        class="rounded-lg bg-amber-400 px-5 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-300">
+                        class="rounded-lg bg-brand-400 px-5 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-brand-300">
                     Cadastrar filme
                 </button>
             </div>

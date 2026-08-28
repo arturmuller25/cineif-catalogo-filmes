@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             FilmeSeeder::class,
             AvaliacaoSeeder::class,
+            FavoritoSeeder::class,
         ]);
     }
 }

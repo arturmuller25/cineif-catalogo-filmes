@@ -6,8 +6,12 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    --color-brand-300: #ffcf5c;
+    --color-brand-400: #f7b32b;
+    --color-brand-500: #eaa019;
+    --color-brand-600: #cf8912;
 }
 
 /* Campo de avaliacao por estrelas (CSS puro, sem JavaScript). */
@@ -26,7 +30,7 @@
 
 .rating-stars label {
     cursor: pointer;
-    color: #3f3f46; /* zinc-700 */
+    color: #3f3f46;
     transition: color 0.15s ease;
 }
 
@@ -37,15 +41,30 @@
 
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-    color: #fcd34d; /* amber-300 */
+    color: #ffcf5c;
 }
 
 .rating-stars input:checked ~ label {
-    color: #fbbf24; /* amber-400 */
+    color: #f7b32b;
 }
 
 .rating-stars input:focus-visible ~ label {
-    outline: 2px solid #fbbf24;
+    outline: 2px solid #f7b32b;
     outline-offset: 2px;
     border-radius: 4px;
+}
+
+/* Rolagem horizontal das secoes (estilo prateleira). */
+.row-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #3f3f46 transparent;
+}
+
+.row-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.row-scroll::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 999px;
 }

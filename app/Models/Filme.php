@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -52,6 +53,14 @@ class Filme extends Model
     }
 
     /**
+     * Usuarios que favoritaram este filme (belongsToMany).
+     */
+    public function favoritadoPor(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favoritos', 'filme_id', 'user_id')->withTimestamps();
+    }
+
+    /**
      * URL da capa. Aceita tanto upload local (storage) quanto URL externa.
      * Retorna null quando não há imagem cadastrada.
      */
@@ -63,6 +72,11 @@ class Filme extends Model
 
         if (str_starts_with($this->imagem_capa, 'http')) {
             return $this->imagem_capa;
+        }
+
+        // Posteres inclusos no projeto ficam em public/posters.
+        if (str_starts_with($this->imagem_capa, 'posters/')) {
+            return asset($this->imagem_capa);
         }
 
         return asset('storage/' . $this->imagem_capa);

@@ -9,7 +9,7 @@
             <p class="mt-1 text-zinc-400">Olá, {{ auth()->user()->name }}. Gerencie o catálogo por aqui.</p>
         </div>
         <a href="{{ route('admin.filmes.create') }}"
-           class="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-300">
+           class="rounded-lg bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-brand-300">
             + Cadastrar filme
         </a>
     </div>
@@ -18,15 +18,15 @@
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
             <p class="text-sm text-zinc-400">Total de filmes</p>
-            <p class="mt-1 text-3xl font-extrabold text-amber-400">{{ $totalFilmes }}</p>
+            <p class="mt-1 text-3xl font-extrabold text-brand-400">{{ $totalFilmes }}</p>
         </div>
         <div class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
             <p class="text-sm text-zinc-400">Categorias</p>
-            <p class="mt-1 text-3xl font-extrabold text-amber-400">{{ $totalCategorias }}</p>
+            <p class="mt-1 text-3xl font-extrabold text-brand-400">{{ $totalCategorias }}</p>
         </div>
         <div class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
             <p class="text-sm text-zinc-400">Cadastrados por você</p>
-            <p class="mt-1 text-3xl font-extrabold text-amber-400">{{ $meusFilmes }}</p>
+            <p class="mt-1 text-3xl font-extrabold text-brand-400">{{ $meusFilmes }}</p>
         </div>
     </div>
 
@@ -41,11 +41,11 @@
                         @if ($capa)
                             <img src="{{ $capa }}" alt="" class="h-full w-full object-cover">
                         @else
-                            <div class="h-full w-full" style="background-image: linear-gradient(160deg, {{ $ultimoFilme->corPlaceholder() }}, #09090b);"></div>
+                            <div class="h-full w-full" style="background-color: {{ $ultimoFilme->corPlaceholder() }};"></div>
                         @endif
                     </div>
                     <div>
-                        <p class="font-semibold text-zinc-100 group-hover:text-amber-400">{{ $ultimoFilme->titulo }}</p>
+                        <p class="font-semibold text-zinc-100 group-hover:text-brand-400">{{ $ultimoFilme->titulo }}</p>
                         <p class="text-sm text-zinc-500">{{ $ultimoFilme->categoria->nome ?? '-' }} · {{ $ultimoFilme->ano }}</p>
                         <p class="mt-1 text-xs text-zinc-500">{{ $ultimoFilme->created_at->diffForHumans() }}</p>
                     </div>
@@ -64,7 +64,7 @@
                 <ul class="mt-3 divide-y divide-zinc-800">
                     @foreach ($recentes as $filme)
                         <li class="flex items-center justify-between gap-3 py-2 text-sm">
-                            <a href="{{ route('galeria.show', $filme) }}" class="truncate text-zinc-200 hover:text-amber-400">
+                            <a href="{{ route('galeria.show', $filme) }}" class="truncate text-zinc-200 hover:text-brand-400">
                                 {{ $filme->titulo }}
                             </a>
                             <span class="shrink-0 text-xs text-zinc-500">{{ $filme->categoria->nome ?? '-' }}</span>
@@ -72,7 +72,7 @@
                     @endforeach
                 </ul>
             @endif
-            <a href="{{ route('admin.filmes.index') }}" class="mt-4 inline-block text-sm font-semibold text-amber-400 hover:underline">
+            <a href="{{ route('admin.filmes.index') }}" class="mt-4 inline-block text-sm font-semibold text-brand-400 hover:underline">
                 Ver todos
             </a>
         </div>

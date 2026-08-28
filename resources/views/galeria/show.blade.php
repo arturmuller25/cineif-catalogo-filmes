@@ -4,21 +4,20 @@
 
 @section('conteudo')
     <a href="{{ route('galeria.index') }}"
-       class="mb-6 inline-flex items-center gap-1 text-sm text-zinc-400 transition hover:text-amber-400">
+       class="mb-6 inline-flex items-center gap-1 text-sm text-zinc-400 transition hover:text-brand-400">
         Voltar para a galeria
     </a>
 
     <article class="grid grid-cols-1 gap-8 md:grid-cols-[280px_1fr]">
-        {{-- Capa --}}
+        {{-- Poster --}}
         <div>
             @php $capa = $filme->capaUrl(); @endphp
-            <div class="overflow-hidden rounded-2xl border border-zinc-800">
+            <div class="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-800">
                 @if ($capa)
-                    <img src="{{ $capa }}" alt="Capa de {{ $filme->titulo }}" class="aspect-[2/3] w-full object-cover">
+                    <img src="{{ $capa }}" alt="Pôster de {{ $filme->titulo }}" class="aspect-[2/3] w-full object-cover">
                 @else
-                    <div class="flex aspect-[2/3] w-full items-center justify-center p-6 text-center"
-                         style="background-image: linear-gradient(160deg, {{ $filme->corPlaceholder() }}, #09090b);">
-                        <span class="text-2xl font-bold leading-tight text-white/90 drop-shadow">{{ $filme->titulo }}</span>
+                    <div class="flex aspect-[2/3] w-full items-center justify-center p-6 text-center" style="background-color: {{ $filme->corPlaceholder() }};">
+                        <span class="text-2xl font-bold uppercase leading-tight text-white/90">{{ $filme->titulo }}</span>
                     </div>
                 @endif
             </div>
@@ -26,16 +25,16 @@
 
         {{-- Informacoes --}}
         <div>
-            <div class="flex flex-wrap items-center gap-2">
-                <span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-400">
-                    {{ $filme->categoria->nome }}
-                </span>
-                <span class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">{{ $filme->ano }}</span>
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="rounded-full bg-brand-400/10 px-3 py-1 text-xs font-semibold text-brand-400">{{ $filme->categoria->nome }}</span>
+                    <span class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">{{ $filme->ano }}</span>
+                </div>
+                @include('partials.botao_favorito')
             </div>
 
-            <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">{{ $filme->titulo }}</h1>
+            <h1 class="mt-3 text-3xl font-extrabold uppercase leading-none tracking-tight sm:text-5xl">{{ $filme->titulo }}</h1>
 
-            {{-- Nota media (estilo IMDb) --}}
             <div class="mt-3 flex items-center gap-2">
                 @include('partials.estrelas', ['nota' => $media, 'tamanho' => 'h-5 w-5'])
                 @if ($avaliacoes->isNotEmpty())
@@ -46,9 +45,7 @@
                 @endif
             </div>
 
-            <p class="mt-2 text-sm text-zinc-500">
-                Cadastrado por {{ $filme->usuario->name ?? 'Desconhecido' }}
-            </p>
+            <p class="mt-2 text-sm text-zinc-500">Cadastrado por {{ $filme->usuario->name ?? 'Desconhecido' }}</p>
 
             <h2 class="mt-6 text-sm font-semibold uppercase tracking-wide text-zinc-400">Sinopse</h2>
             <p class="mt-2 leading-relaxed text-zinc-200">{{ $filme->sinopse }}</p>
@@ -76,17 +73,14 @@
         </div>
     </article>
 
-    {{-- Avaliacoes (estilo IMDb) --}}
+    {{-- Avaliacoes --}}
     <section class="mt-14">
         <h2 class="mb-4 text-lg font-bold">Avaliações</h2>
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr]">
-            {{-- Formulario de avaliacao --}}
             <div class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
                 @auth
-                    <p class="text-sm font-semibold text-zinc-200">
-                        {{ $minhaAvaliacao ? 'Atualize sua avaliação' : 'Avalie este filme' }}
-                    </p>
+                    <p class="text-sm font-semibold text-zinc-200">{{ $minhaAvaliacao ? 'Atualize sua avaliação' : 'Avalie este filme' }}</p>
                     <form method="POST" action="{{ route('avaliacoes.store', $filme) }}" class="mt-3">
                         @csrf
                         <div class="rating-stars" role="radiogroup" aria-label="Nota de 1 a 5">
@@ -100,34 +94,27 @@
                                 </label>
                             @endfor
                         </div>
-
-                        @error('nota')
-                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                        @enderror
+                        @error('nota')<p class="mt-1 text-xs text-red-400">{{ $message }}</p>@enderror
 
                         <textarea name="comentario" rows="3" placeholder="Comentário (opcional)"
-                                  class="mt-3 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-amber-400 focus:outline-none">{{ old('comentario', $minhaAvaliacao->comentario ?? '') }}</textarea>
-                        @error('comentario')
-                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                        @enderror
+                                  class="mt-3 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-brand-400 focus:outline-none">{{ old('comentario', $minhaAvaliacao->comentario ?? '') }}</textarea>
+                        @error('comentario')<p class="mt-1 text-xs text-red-400">{{ $message }}</p>@enderror
 
-                        <button type="submit"
-                                class="mt-3 w-full rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-300">
+                        <button type="submit" class="mt-3 w-full rounded-lg bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-brand-300">
                             {{ $minhaAvaliacao ? 'Salvar avaliação' : 'Enviar avaliação' }}
                         </button>
                     </form>
                 @else
                     <p class="text-sm text-zinc-300">Quer avaliar este filme?</p>
                     <p class="mt-1 text-sm text-zinc-500">
-                        <a href="{{ route('login') }}" class="font-semibold text-amber-400 hover:underline">Entre</a>
+                        <a href="{{ route('login') }}" class="font-semibold text-brand-400 hover:underline">Entre</a>
                         ou
-                        <a href="{{ route('register') }}" class="font-semibold text-amber-400 hover:underline">cadastre-se</a>
+                        <a href="{{ route('register') }}" class="font-semibold text-brand-400 hover:underline">cadastre-se</a>
                         para deixar sua nota.
                     </p>
                 @endauth
             </div>
 
-            {{-- Lista de avaliacoes --}}
             <div>
                 @forelse ($avaliacoes as $avaliacao)
                     <div class="mb-3 rounded-xl border border-zinc-800 bg-zinc-900/30 p-4">
@@ -153,27 +140,9 @@
     @if ($relacionados->isNotEmpty())
         <section class="mt-14">
             <h2 class="mb-4 text-lg font-bold">Mais em {{ $filme->categoria->nome }}</h2>
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 @foreach ($relacionados as $rel)
-                    @php $capaRel = $rel->capaUrl(); @endphp
-                    <a href="{{ route('galeria.show', $rel) }}"
-                       class="group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition hover:border-amber-400/50">
-                        <div class="aspect-[2/3] overflow-hidden">
-                            @if ($capaRel)
-                                <img src="{{ $capaRel }}" alt="Capa de {{ $rel->titulo }}"
-                                     class="h-full w-full object-cover transition group-hover:scale-105">
-                            @else
-                                <div class="flex h-full w-full items-center justify-center p-3 text-center"
-                                     style="background-image: linear-gradient(160deg, {{ $rel->corPlaceholder() }}, #09090b);">
-                                    <span class="text-sm font-bold text-white/90">{{ $rel->titulo }}</span>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="p-2">
-                            <h3 class="line-clamp-1 text-xs font-semibold text-zinc-200">{{ $rel->titulo }}</h3>
-                            <span class="text-xs text-zinc-500">{{ $rel->ano }}</span>
-                        </div>
-                    </a>
+                    @include('partials.filme_card', ['filme' => $rel])
                 @endforeach
             </div>
         </section>

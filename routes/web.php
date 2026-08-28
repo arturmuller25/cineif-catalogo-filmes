@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvaliacaoController;
+use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\FilmeController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\PainelController;
+use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,17 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/sair', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| Area do usuario logado: favoritos (watchlist) e perfil
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::post('/filme/{filme}/favoritar', [FavoritoController::class, 'toggle'])->name('favoritos.toggle');
+    Route::get('/favoritos', [FavoritoController::class, 'index'])->name('favoritos.index');
+    Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
+});
 
 /*
 |--------------------------------------------------------------------------

@@ -14,7 +14,7 @@
                 Lixeira
             </a>
             <a href="{{ route('admin.filmes.create') }}"
-               class="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-amber-300">
+               class="rounded-lg bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-brand-300">
                 + Novo filme
             </a>
         </div>
@@ -22,7 +22,7 @@
 
     @if ($filmes->isEmpty())
         <div class="rounded-2xl border border-dashed border-zinc-800 py-16 text-center text-zinc-500">
-            Nenhum filme cadastrado. <a href="{{ route('admin.filmes.create') }}" class="text-amber-400 hover:underline">Cadastre o primeiro</a>.
+            Nenhum filme cadastrado. <a href="{{ route('admin.filmes.create') }}" class="text-brand-400 hover:underline">Cadastre o primeiro</a>.
         </div>
     @else
         <div class="overflow-x-auto rounded-2xl border border-zinc-800">
@@ -49,10 +49,10 @@
                                         @if ($capa)
                                             <img src="{{ $capa }}" alt="" class="h-full w-full object-cover">
                                         @else
-                                            <div class="h-full w-full" style="background-image: linear-gradient(160deg, {{ $filme->corPlaceholder() }}, #09090b);"></div>
+                                            <div class="h-full w-full" style="background-color: {{ $filme->corPlaceholder() }};"></div>
                                         @endif
                                     </div>
-                                    <a href="{{ route('galeria.show', $filme) }}" class="font-medium text-zinc-100 hover:text-amber-400">
+                                    <a href="{{ route('galeria.show', $filme) }}" class="font-medium text-zinc-100 hover:text-brand-400">
                                         {{ $filme->titulo }}
                                     </a>
                                 </div>
